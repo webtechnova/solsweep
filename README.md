@@ -40,9 +40,9 @@ Requires Node 18.18+ (Node 20 recommended, see `.nvmrc`).
 | Variable | Default | Purpose |
 | --- | --- | --- |
 | `NEXT_PUBLIC_SOLANA_NETWORK` | `mainnet-beta` | `mainnet-beta` (real SOL) or `devnet` (test SOL) |
-| `NEXT_PUBLIC_RPC_URL` | public cluster URL | Your own RPC endpoint (Helius, QuickNode, Alchemy, ...) |
+| `NEXT_PUBLIC_RPC_URL` | `https://solana-rpc.publicnode.com` on mainnet, public devnet URL otherwise | Your own RPC endpoint (Helius, QuickNode, Alchemy, ...) |
 
-`NEXT_PUBLIC_*` values are embedded in the browser bundle and are **public**. Never put a secret there. If your RPC provider gives you an API key, restrict that key to your site's domain in the provider dashboard. The free public RPC is rate-limited, so use your own endpoint for real use.
+`NEXT_PUBLIC_*` values are embedded in the browser bundle and are **public**. Never put a secret there. If your RPC provider gives you an API key, restrict that key to your site's domain in the provider dashboard. Leave `NEXT_PUBLIC_RPC_URL` empty unless you have your own endpoint. Solana's own `api.mainnet-beta.solana.com` returns **403 Access forbidden** to browser apps, so mainnet defaults to PublicNode instead.
 
 ## Deploy to Vercel
 
@@ -114,7 +114,7 @@ tests/                     Vitest unit tests
 
 | Symptom | Fix |
 | --- | --- |
-| "The public RPC is rate-limiting requests" | Set `NEXT_PUBLIC_RPC_URL` to your own endpoint and redeploy. |
+| "The public RPC is rate-limiting requests" or "403 Access forbidden" | Leave `NEXT_PUBLIC_RPC_URL` empty and redeploy, or set it to your own endpoint. Do not point it at `https://api.mainnet-beta.solana.com`. |
 | "The destination wallet is empty..." | The new wallet needs a first deposit of at least ~0.00089 SOL. Fund it from an exchange or another wallet first. |
 | "This would leave X behind..." | Use **MAX**, or send less so at least ~0.00089 SOL stays. |
 | Wallet button does nothing | Install Phantom/Solflare, unlock it, refresh the page. |

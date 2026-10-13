@@ -50,6 +50,10 @@ export function friendlyError(err: unknown): string {
     return 'The public RPC is rate-limiting requests. Wait a moment and retry, or set NEXT_PUBLIC_RPC_URL to your own RPC endpoint.';
   }
 
+  if (msg.includes('access forbidden') || (msg.includes('403') && msg.includes('forbidden'))) {
+    return 'The Solana RPC refused this request (403 Access forbidden). The free Solana Foundation mainnet endpoint blocks browser apps. Clear NEXT_PUBLIC_RPC_URL so the built-in endpoint is used, or set it to your own RPC, then redeploy.';
+  }
+
   if (msg.includes('insufficient funds for rent')) {
     return 'Solana rejected the transfer because it would leave too little SOL behind. Use MAX to send everything, or leave a larger remainder.';
   }

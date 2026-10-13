@@ -14,6 +14,13 @@ describe('friendlyError', () => {
     expect(friendlyError(new Error('429 Too Many Requests'))).toMatch(/NEXT_PUBLIC_RPC_URL/);
   });
 
+  it('recognises a forbidden public RPC', () => {
+    const raw =
+      '403 : {"jsonrpc":"2.0","error":{"code": 403, "message":"Access forbidden"}, "id": "abc" }';
+    expect(friendlyError(new Error(raw))).toMatch(/403 Access forbidden/);
+    expect(friendlyError(new Error(raw))).toMatch(/NEXT_PUBLIC_RPC_URL/);
+  });
+
   it('recognises an expired transaction', () => {
     const err = new Error('block height exceeded');
     err.name = 'TransactionExpiredBlockheightExceededError';
