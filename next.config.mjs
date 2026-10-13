@@ -16,7 +16,7 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: https:",
   "font-src 'self' data:",
-  "connect-src 'self' https: wss:" + (isDev ? ' ws:' : ''),
+  "connect-src 'self' https: wss: https://va.vercel-scripts.com" + (isDev ? ' ws:' : ''),
   "frame-src 'self' https://connect.solflare.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
